@@ -1,0 +1,77 @@
+DTO 클레스랑 주고받을때 데이터 그릇
+Entity 서비스레이어랑 DB랑 데이터를 주고받을때 데이터를 받는 그릇
+
+         DTO        DTO<->Entity   Entity	     H2      
+사용자 <-> Controller <-> Service <-> Repository <-> DB
+
+삭제하기
+id를 통해서 db에 들어가 있는 삭제하기
+ProductService
+deleteProduct()메서드
+id를 통해 데이터가 존재하면 삭제하기
+삭제가 잘됐으면 true
+삭제가 안됐으면 false
+
+Product Controller
+HTTP 메서드 : DELETE
+메서드명 : deleteProduct
+리소스 : /{id}
+
+IoC(Inversion Of Controll) : 제어의 역전
+객체로 만들고 싶은 클래스에 @RestController, @Repository, @Service, Component
+어노테이션이 앞에 붙으면 애플리캐이션 실행시 스프링이 메모리에 객체를 다 올려준다.
+객체 컨테이너라고 하는곳에 Map 형태로 저장한다.
+
+내가 필요한 곳에 객체를 주입시켜주는 행위를 의존성 주입이라고 한다. (Dependenct Injection)
+
+---------------------------------------------
+
+1. spring boot와 react 연결하기
+1) 이클립스 서버올리기 - Application.java 프로그램 실행 f11 
+2) 비주얼 스튜디오 코드 
+App.js -> import axios from 'axios';  하고  cd 경로 찾아서 axios 설치 npm install axios
+
+useEffect(()=>{     
+    //백엔드에 요청하기 
+    axios.get("http:localhost:9090/todo",{
+      headers:{ //주고받는 형식은 Json형식으로 해줘
+        "Content-Type" : "application/json"
+      }
+    })
+    .then(response => {setItems(response.data)})
+    .catch(error=>{
+      console.error("There was an error!",error)
+    })
+    //Promise 객체로 돌려받는다 : 성공메서드, 실패 메서드 --> 처리 .then .catch
+  },[])  // ---무한루프X, 한번만
+
+3) CORS 허용하기 
+동일출처정책---보안을 위해 다른 도메인에서 데이터를 가져올 수 없다
+CORS를 허용해야한다. 
+두 웹사이트간 데이터 요청을 허용하는 방식, 받는경우가 많다.
+API 가져오려면 key를 받아야한다.
+microService Arctiacture  ----서버를 여러개 두고 쪼개놓는 경우도 있다.
+
+방법
+Config 패키지,java -> @Configuration
+
+//브라우저가 CORS 요청 결과를 캐싱하는데 최대 시간 설정
+private final long MAX_AGE_SECS=3600;
+@Override
+public void addCorsMappings(CorsRegistry registry) {
+	//모든경로에 대해 CORS 설정 적용
+	registry.addMapping("/**")
+	//React 애플리케이션이 실행되는 도메인(출처)에서 오는 요청을 허용
+	.allowedOrigins("http://local:3000")
+	//HTML 메서드(GET,POST,PUT,DELETE)를 허용
+	.allowedMethods("GET","POST","PUT","DELETE")
+	//모든 헤더를 허용하겠다.
+	.allowedHeaders("*")
+	//쿠키나 인증정보를 포함한 요청을 허용
+	.allowCredentials(true)
+	//브라우저가 서버로부터 받은 응답을 일정 시간 동안 저장해두고(캐싱), 그 시간 내 동일한 요청이 있을경우
+	//서버에 다시 요청하지 않고, 저장된 응답을 재사용한다.
+	.maxAge(MAX_AGE_SECS);
+}
+
+

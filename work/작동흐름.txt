@@ -1,0 +1,23 @@
+프론트엔드 + 백엔드
+
+특정 유저가 작성한 Todo를 조회(임시 계정을 쓰기 때문에 지금은 의미X)
+	    요청(request)	리액트	          응답 스프링부트
+클라이언트      -><-	프론트엔드    -> <-    백엔드
+		응답	fetch()/todo	TodoController
+			axios()		↓↑
+					TodoService
+					↓↑
+					repository
+					↓↑
+					db
+
+추가(내가 입력한 데이터를 백엔드까지 보내야함)
+
+
+
+
+
+
+
+
+

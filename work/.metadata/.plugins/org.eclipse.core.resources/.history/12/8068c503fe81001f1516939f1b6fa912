@@ -1,0 +1,40 @@
+package com.example.demo.controler;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.UserDTO;
+import com.example.demo.model.UserEntity;
+import com.example.demo.service.UserService;
+
+import lombok.extern.slf4j.Slf4j;
+
+//서비스를 이용해서 유저를 가져오는 기능 회원가입 기능
+@RestController
+@Slf4j
+@RequestMapping("/auth")
+public class UserController {
+	@Autowired
+	private UserService userService;
+	
+	//회원가입 -> 데이터베이스에 데이터를 추가
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
+		//requestBody에 포함된 UserDTO객체를 수신하여 처리한다.
+		try {
+			//UserDTO 기반으로 UserEntity 객체를 생성한다.
+			UserEntity user=UserEntity.builder()
+							.username(userDTO.getUsername())
+							.password(userDTO.getPassword())
+							.build();
+			//UserService를 이용해 새로 만든 UserEntity를 데이터베이스에 저장한다.
+			UserEntity registeredUser = userService.create(user);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+}

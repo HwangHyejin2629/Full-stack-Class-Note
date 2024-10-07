@@ -1,0 +1,43 @@
+package com.example.demo.security;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+
+import org.springframework.stereotype.Service;
+import io.jsonwebtoken.Jwts;
+import com.example.demo.model.UserEntity;
+
+import lombok.extern.slf4j.Slf4j;
+//유저의 정보를 받아서 JWT(토큰) 생성하기
+@Service
+@Slf4j
+public class TokenProvider {
+	private static final String SECRET_KEY ="eyJhbGciOiJIUzUxMiJ9eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcyNzk3NzQ2OSwiaWF0IjoxNzI3OTc3NDY5fQ3WUk1X983GsejnQZJSNQKjZBfBeSzOK4cAxpndz0G3pSItFPDiDVnSfD0ZsQzVCSkSMKQozyMVDjt9VYTcJw\"";
+	//다른코드넣으려면 넣을때 생길 수 있는 \" 없앨것
+	public String create(UserEntity userEntity) {
+		//토큰의 유효날짜 1일로 정함
+		//Date.from() : Instant 객체를 Date로 반환하는 메서드
+		//Instant.now() : 현재 기준의 시간을 날짜와 시간 초 단위로 표현
+		//.plus(1,ChronoUnit.DAYS) : Instant객체에 하루를 더하는 동작
+		Date expiryDate=Date.from(Instant.now().plus(1,ChronoUnit.DAYS));
+		//Date --- java.util 로 사용
+		/*
+		 {header
+		 "alg" : "HS512"
+		 }
+		 {payload :
+		 "sub" : "~~~~"
+		 "iat" : "~~~~"
+		 "exp" : "~~~~"
+		 }
+		 sugnature(SECRET_KEY를 이용해 서명한 부분)
+		 */
+		
+		//JWT토큰 생성
+		return Jwts.builder()
+				.signWith(SignatureAlgorith.HS512,SECRET_KEY)
+				.
+		
+	}
+}

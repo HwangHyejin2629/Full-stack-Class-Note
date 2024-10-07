@@ -1,0 +1,67 @@
+레이어드아키텍처  순서		DTO(컨트롤러) - Model(서비스) - 엔티티(레포지터리) - Data
+
+				
+서버 돌리는 어노테이션		@SpringBootApplication -----초기설정되있음 	
+				
+				@Configuration : 해당 클래스가 설정파일임을 알려주는 어노테이션
+				@ComponentScan : 자동으로 컴포넌트어노테이션이 붙은 클래스를 검색하여 빈(Bean)을 등록한다.
+				@EnableAutoConfiguration : 스프링의 다양한 설정이 자동으로 구성되고 완료된다.
+				이 세가지가 합쳐진 기능이다.
+DI 의존성주입
+객체 등록 			@Component
+				class A{ }
+객체 주입				1. 주입할 클래스에 @Autowired
+				class B {
+				2. 생성자 주입 
+				@RequiredArgsConstructor
+				class B {
+					private final A(a a)( this.a=a; );
+				}
+				3. setter 주입
+final이나 @NonNull 	@RequiredArgsConstructor
+생성자 자동생성
+
+특정 빈 주입하고 싶을때		메서드(@Qualifier("빈명") 매개변수) {  ----빈 명은 소문자시작
+여러개중 기본 주입할 빈 지정	@Primary
+
+이클립스에 깔아야 하는것		스프링부트 - Spring Web, Lombock, Spring Data JPA, H2 Database
+
+DTO
+설정하는 어노테이션			@Builder  @NoArgsConstructor  @AllArgsConstructor  @Data
+코드						필드명 ;   ---- 프라이빗한 정보는 숨긴다
+						생성자 (final 엔티티명 entity){
+						this.필드명=entity.getter( );
+						}
+
+Controller
+컨트롤러 설정 어노테이션		@RestController ---@Controller + @Responsebody  html 관련 코드 및 요청 /응답 매핑을 해준다
+클래스에 주소 지정하기		@RequestMapping("주소명") -----localhost:9090/주소명 접속
+클래스 안 메서드에 주소 지정	@PostMapping("/주소1") ------Post요청시 주소1의표현   localhost:9090/주소명/주소1
+						@GetMapping("/주소1") ------Get요청시 주소1의표현   localhost:9090/주소명/주소1
+주소로 정보 받기
+응답 바디에 데이터 넘기기		public 제너릭명<?> testControllerResponseBody( ){   ------제너릭 객체를 반환하여 요청에대한 응답 구성
+							List<String> list=new ArrayList<>( );
+							list.add("넘길내용");
+							제네릭명<String> 변수명 = 제네릭명<String>builder().data(list).build();
+							return 변수명;						}				
+빌더패턴 					builder( ).data(list).build( );
+
+요청잘못됐을때 응답하기		ResponseEntity.badRequest().body(전달할 것)
+
+해당 파라미터가 요청에 		메서드(@RequestParam(required=false) 매개변수){ }
+반드시 포함될 필요가 없다
+
+
+
+Entity						데이터베이스에 있는 내용을 담기 위한 클래스
+엔티티 클래스 설정			@Entity  @Table(name="테이블네임") @Builder  @NoArgsConstructor  @AllArgsConstructor  @Data  
+
+빌더패턴 설정 어노테이션		@Builder
+테이블과 연결 어노테이션		@Table(name="테이블명")
+인자가 없는 생성자 어노		@NoArgsConstructor
+모든 필드 생성자 어노			@AllArgsConstructor
+@Data					모든 필드의 getter, setter, toString( )메서드 생성 (toString() : 모든 필드의 값 문자열로 표현), 
+						equals( )생성(객체의 동등성), hashCode( ) 생성 (해시코드 비교할 수 있도록)
+
+기본키 필드 설정				@Id  @GeneratedValue(generator="system-uuid")  @GenericGenerator(name="system-uuid",strategy="uuid")
+

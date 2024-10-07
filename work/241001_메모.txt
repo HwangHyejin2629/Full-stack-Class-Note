@@ -1,0 +1,51 @@
+사용자 관리 시스템
+
+프로젝트 생성
+group : com.korea
+artifact : user
+
+필요라이브러리
+Spring Web
+H2
+lombok
+Spring Data JPA
+
+이클립스에 import하기
+
+Entity,DTO -> persistence -> Service -> Controller
+
+com.korea.user.model 패키지 생성
+- UserEntity클래스 생성하기
+- id,name,email 필드를 갖는다.
+- 매핑되는 테이블이름은 users
+- id는 기본키이고 @GeneratedValue(stratgey = GenerationType.AUTO) 로 값을 자동생성
+
+com.korea.user.dio 패키지 생성
+UserDTO 클래스 생성하기
+id,name,email 필드 갖는다
+DTO에서 Entity, Entity에서 DTO로 변환하는 기능을 갖고 있다.
+
+----데이터 받을준비 됐고,
+
+com.korea.user.persistence패키지 생성하기
+UserRepository 인터페이스 생성하기
+JpaRepository 상속받기
+
+com.korea.user.service패키지 만들기
+UserService클래스 생성하기
+Entity->DTO로 바꾸기
+생성하고 추가 잘 됐은지 리스트(List<UsetDTO)를 반환
+사용자를 생성하는 create메서드 생성하기
+
+com.korea.user.controller패키지 만들기
+UserController클래스 생성하기
+HTTP 매서드 : POST
+메서드명 createUser
+사용자에게 추가하기 위한 이름과 이메일을 받아서 추가한다.
+
+UserService에 getAllUser()메서드 만들기
+
+UserController
+HTTP 메서드 :get
+메서드명 : getAllusers()
+

@@ -1,0 +1,78 @@
+package com.example.demo.controler;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.ResponseDTO;
+import com.example.demo.dto.UserDTO;
+import com.example.demo.model.UserEntity;
+import com.example.demo.security.TokenProvider;
+import com.example.demo.service.UserService;
+
+import lombok.extern.slf4j.Slf4j;
+
+//서비스를 이용해서 유저를 가져오는 기능 회원가입 기능
+@RestController
+@Slf4j
+@RequestMapping("/auth")
+public class UserController {
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private TokenProvider tokenProvider;
+	
+	//회원가입 -> 데이터베이스에 데이터를 추가
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
+		//requestBody에 포함된 UserDTO객체를 수신하여 처리한다.
+		try {
+			//UserDTO 기반으로 UserEntity 객체를 생성한다.
+			UserEntity user=UserEntity.builder()
+							.username(userDTO.getUsername())
+							.password(userDTO.getPassword())
+							.build();
+			//UserService를 이용해 새로 만든 UserEntity를 데이터베이스에 저장한다.
+			UserEntity registeredUser = userService.create(user);
+			//등록된 UserEntity정보를 UserDTO로 변환하여 응답에 사용한다.
+			UserDTO responseUserDTO = UserDTO.builder()
+									.id(registeredUser.getId())
+									.username(registeredUser.getUsername())
+									.build();
+			//성공적으로 저장한 유저 정보를 포함한 HTTP 200응답을 반환한다.
+			return ResponseEntity.ok().body(responseUserDTO);
+		}catch (Exception e) {
+			//예외발생한 경우,에러 메세지를 포함한 ResponseDTO객체를 만들어 응답한다.
+			ResponseDTO responseDTO=ResponseDTO.builder().error(e.getMessage())
+									.error(e.getMessage())
+									.build();
+			//HTTP 400 상태 코드를 반환하고 에러 메세지를 Response Body에 포함시킨다.
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
+	}
+	//아이디와 비밀번호 입력받아 로그인처리
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO){
+		UserEntity user=userService.getByCredentials(
+				userDTO.getUsername(),userDTO.getPassword());
+		if(user!=null) {
+			//인증에 성공한 경우 유저 정보를 UserDTO로 변환하여 응답에 사용한다.
+			final UserDTO responseUserDTO = UserDTO.builder()
+					.id(user.getId()).username(user.getUsername())
+					.build();
+			//성공적으로 인증된 유저 정보를 포함한 HTTP 200응답을 반환한다.
+			return ResponseEntity.ok().body(responseUserDTO);
+		}else {
+			ResponseDTO responseDTO =ResponseDTO.builder()
+					.error("Login failed")
+					.build(); //ResponseDTO 객체를 빌드
+			//HTTP 400 상태코드를 반환하고, 에러메세지를 응답 본문에 포함시킨다.
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
+		
+	}
+}
