@@ -3,69 +3,49 @@ package com.korea.product.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.korea.product.dto.ProductDTO;
+import com.korea.product.dto.ResponseDTO;
+import com.korea.product.model.ProductEntity;
 import com.korea.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("api/products")
-public class ProductController {
 
-	private final ProductService service;
+@RestController
+@RequiredArgsConstructor // 필드에 final이나 @Nonnull이 붙어있는 필드를 매개변수로 갖는 생성자를 생성.
+@RequestMapping("product")
+public class ProductController {
+	private final ProductService service; //생성자 주입
+	//==
+	//public ProductController(ProductService productService){
+	// 	this.productService=productService;
+	//}
 	
-	//상품추가
-	@PostMapping
-	public ResponseEntity<?> addProduct(){
-		return ResponseEntity.ok().body(service.addProduct());
-	}
-	
-	//상품조회
-	//localhost:9090/api/products?minPrice=200&name="phone"
 	@GetMapping
-	public ResponseEntity<?> getFilteredProduct( 
-			//
-			@RequestParam(value="minPrice", required=false) Double minPrice,
-			@RequestParam(value="name", required=false) String name){
-		System.out.println("m_price : " + minPrice);
-		List<ProductDTO> products = service.getFilteredProducts(minPrice, name);
-		return ResponseEntity.ok().body(products);
+	public ResponseEntity<?> productList(){
+		List<ProductDTO> dtos= service.retrieveAll();
+		ResponseDTO<ProductDTO> response = ResponseDTO.<ProductDTO>builder().data(dtos).build();
+		
+		return ResponseEntity.ok(response);
+
 	}
 	
-	//상품수정
-	@PutMapping("/{id}")
-	public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody ProductDTO dto){
-	 	ProductDTO u_dto = service.updateProduct(id, dto);
-	 	if(u_dto != null) {
-	 		return ResponseEntity.ok().body(u_dto);
-	 	}
-	 	return ResponseEntity.badRequest().body("업데이트가 안됐습니다.");
+	@PostMapping
+	public ResponseEntity<?> createProduct(@RequestBody ProductDTO dto) {
+		//DTO->Entity
+		ProductEntity entity = ProductDTO.toEntity(dto); //DTO->Entity
+		//entity를 넣어서 service의 create메서드 실행 
+		service.create(entity);
+		
+		//모든 리스트 반환
+		List<ProductDTO> dtos= service.retrieveAll();
+		ResponseDTO<ProductDTO> response = ResponseDTO.<ProductDTO>builder().data(dtos).build();
+		return ResponseEntity.ok(response);
 	}
-	
-	//상품삭제
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> publicController(@PathVariable int id){
-		boolean result=service.deleteProduct(id); //id service로 넘기면 service에서 id로 삭제한다.
-		if(result){
-			return ResponseEntity.ok("삭제 잘됨");
-		}return ResponseEntity.badRequest().body("삭제가 잘 안됨");
-	}
-	
-	
-	
-	
-	
-	
-	
 }
