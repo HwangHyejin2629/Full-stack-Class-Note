@@ -9,39 +9,50 @@ import com.korea.product.dto.ProductDTO;
 import com.korea.product.model.ProductEntity;
 import com.korea.product.persistence.ProductRepository;
 
-
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 
 @Service
-@Slf4j  
 @RequiredArgsConstructor
 public class ProductService {
-	private final ProductRepository repository;
+
+	private final ProductRepository productRepository;
 	
-	//모든 상품 조회
-	public List<ProductDTO> retrieveAll(){ //DTO로 내보내게 만든다.2건 이상 조회가 될테니 List
+	//조회하기
+	public List<ProductDTO> findAll(){
 		//DB에 접근해서 데이터를 조회
-		//findAll():select*from product;
-		List<ProductEntity> list = repository.findAll();
+		//findAll() : select * from product;
+		List<ProductEntity> list = productRepository.findAll();
 		
-		//리스트안에 있는 Entity를 Dto로 변경
-		//스트림연산 : 스트림 생성(list.stream() 복사), 중간연산(.map(ProductDTO::new) 실제로 하고싶은작업 entity를 dto로 변환), 마무리연산(.collect(Collectors.toList() 리스트에 담아서 반환해)
-		List<ProductDTO> dtos= list.stream().map(ProductDTO::new).collect(Collectors.toList());
-		
+		//리스트 안에 들어있는 Entity들을 DTO로 변경
+		List<ProductDTO> dtos = list.stream().map(ProductDTO::new).collect(Collectors.toList());
 		return dtos;
 	}
 	
-	public List<ProductDTO> create(ProductEntity entity) {
-		//데이터 추가하기
-		repository.save(entity);
+	//추가하기
+	public List<ProductDTO> create(ProductDTO dto){
+		//dto -> entity
+		ProductEntity entity = ProductDTO.toEntity(dto);
 		
-		//전체 조회
-		List<ProductEntity> list = repository.findAll();
-		List<ProductDTO> dtos= list.stream().map(ProductDTO::new).collect(Collectors.toList());
+		//넘어온 데이터를 데이터베이스에 추가
+		productRepository.save(entity);
 		
-		return dtos;
+		//다시 조회해서 반환
+		return findAll();
+		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
+
+
+
+

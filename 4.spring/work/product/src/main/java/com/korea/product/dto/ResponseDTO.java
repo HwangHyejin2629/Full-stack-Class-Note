@@ -8,10 +8,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class ResponseDTO<T> {
 	private String error;
-	private List<T> data;  //ProductDTO를 List에 담아서 내보낸다.
+	private List<T> data;
 }
+
+
+
+
+

@@ -2,9 +2,6 @@ package com.korea.product.dto;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import com.korea.product.model.ProductEntity;
 
 import lombok.AllArgsConstructor;
@@ -12,36 +9,51 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDTO {
-	private int id;
-	private String name;
-	private int inventory;
-	private int price;
-	private LocalDateTime insertDate;	
+
+	private int productId;
+	private String productName;
+	private int productStock;
+	private int productPrice;
+	private LocalDateTime registerDate;
 	private LocalDateTime updateDate;
 	
+	//Entity -> DTO
 	public ProductDTO(ProductEntity entity) {
-		this.id=entity.getId();
-		this.name=entity.getName();
-		this.inventory=entity.getInventory();
-		this.price=entity.getPrice();
-		this.insertDate=entity.getInsertDate();
-		this.updateDate=entity.getUpdateDate();
+		this.productId = entity.getProductId();
+		this.productName = entity.getProductName();
+		this.productStock = entity.getProductStock();
+		this.productPrice = entity.getProductPrice();
+		this.registerDate = entity.getRegisterDate();
+		this.updateDate = entity.getUpdateDate();
 	}
-	//static : ProductDTO.toEntity 로 호출 가능
-	public static ProductEntity toEntity(ProductDTO dto) { //DTO->Entity
+	
+	//DTO -> Entity
+	public static ProductEntity toEntity(ProductDTO dto) {
 		return ProductEntity.builder()
-				.id(dto.getId())
-				.name(dto.getName())
-				.inventory(dto.getInventory())
-				.price(dto.getPrice())
-				.insertDate(dto.getInsertDate())
+				.productId(dto.getProductId())
+				.productName(dto.getProductName())
+				.productStock(dto.getProductStock())
+				.productPrice(dto.getProductPrice())
+				.registerDate(dto.getRegisterDate())
 				.updateDate(dto.getUpdateDate())
 				.build();
-				
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
