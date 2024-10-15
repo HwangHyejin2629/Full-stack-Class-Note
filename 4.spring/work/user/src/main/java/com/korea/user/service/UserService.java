@@ -56,10 +56,29 @@ public class UserService {
 		return userRepository.findByuserIdAndPwd(userId,pwd);
 	}
 	
+	//이름가져오기
+	public UserEntity getUserName(String userId) {
+		Optional<UserEntity> option = userRepository.findByUserId(userId);
+		
+		//조회된 내용이 있다면
+		if(option.isPresent()) {
+			//option에서 내용을 꺼내와 entity에 저장
+			UserEntity entity = option.get();
+			return entity;
+		}
+		return null;
+	}
 	
 	
-	
-	
+	//수정하기
+	public UserEntity userController(UserDTO dto) {
+		UserEntity entity= UserDTO.toEntity(dto);
+		Optional<UserEntity> option = userRepository.findByUserId(entity.getUserId());
+		
+		//조회한 내용이 맞다면, 업데이트하기
+		//업데이트 내용 돌려주기
+		return 
+	}
 	
 	
 	

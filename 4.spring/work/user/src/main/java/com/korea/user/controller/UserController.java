@@ -1,5 +1,6 @@
 package com.korea.user.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +29,11 @@ public class UserController {
 	private TokenProvider tokenProvider;//토큰을 발급해줌
 	
 	//id중복조회
-	@GetMapping("idCheck")
+	//POST,PUT,DELETE로 전달하면 데이터들이 RequestBody로 전송
+	//GET으로 전달할 때는 RequestBody로 전송되지 않음
+	//localhost:9090/users/idCheck?userId='xx'
+	@PostMapping("idCheck")
+	//public ResponseEntity<?> isIdDuplicate(@RequestParam("userId") UserDTO dto){
 	public ResponseEntity<?> isIdDuplicate(@RequestBody UserDTO dto){
 		boolean check = userService.isIdDuplicate(dto.getUserId());
 		ResponseDTO<Boolean> response = ResponseDTO.<Boolean>builder().value(check).build();
@@ -35,7 +41,7 @@ public class UserController {
 	}
 	
 	@PostMapping("signup")
-	//id
+	//userid
 	//pwd
 	//name
 	//email
@@ -76,7 +82,30 @@ public class UserController {
 		} else {
 			ResponseDTO responseDTO = ResponseDTO.builder().error("Login failed").build();
 			return ResponseEntity.badRequest().body(responseDTO);
-		}
+		}	
+	}
+	
+	@GetMapping("name")
+	//@RequestHeader : HTTP 요청헤더 값을 컨트롤러의 메서드에 주입하는데 사용되는 어노테이션
+	public ResponseEntity<?> getUserName(@RequestHeader("Authorization") String token){
+		// "Bearer " 제거
+	    String actualToken = token.substring(7);
+	    
+	    // JWT에서 유저 id 추출
+	    String userId = tokenProvider.validateAndeGetUserId(actualToken);
+	    
+	    //select * from users where userid='';
+	    UserEntity entity = userService.getUserName(userId);
+	    
+	    //Entity -> DTO
+	    UserDTO dto = new UserDTO(entity);
+	    
+	    //List에 묶음
+	    List<UserDTO> dtos = Arrays.asList(dto);
+	    
+	    //ResponseDTO의 data필드에 넣어서 반환
+		ResponseDTO<UserDTO> response = ResponseDTO.<UserDTO>builder().data(dtos).build();
+		return ResponseEntity.ok().body(response);
 	}
 	
 	
