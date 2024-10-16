@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            border-collapse: collapse;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <form name="ff">
+        <table border="1">
+            <tr>
+                <th>id</th>
+                <td><input type="text" name="m_id" placeholder="아이디를 입력해주세요"></td>
+            </tr>
+            <tr>
+                <th>age</th>
+                <td><input type="text" name="m_age" placeholder="나이를 입력해주세요"></td>
+            </tr>
+            <tr>
+                <th>pwd</th>
+                <td><input type="password" name="m_pwd" placeholder="비밀번호를 입력해주세요"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="button" value="전송"></td>
+            </tr>
+        </table>
+    </form>
+    <form></form> <!--form index 1번이 된다.-->
+    <script>
+        function check(){
+        //forms : 현재 html문서내의 form들을 순차적으로 배열로 정의해준 상태
+        //body에서 form 태그가 여러개 존재할 경우 form배열에 0,1,2등 인덱스로 form 태그를구별한다.
+        let f=document.forms[0];
+
+        //form태그 이름 가지고 검색가능
+        let f2=document.ff;
+        
+        //form태그에서 m_id라는 name 속성을 가진 태그값을 가져온다.
+        let myId=f.m_id.value;
+        //유효성 검사 : submit으로 바로 제출하면 형식에 맞지 않는 내용도 전달하기 때문에 불필요 데이터 전송하게 된다.
+        if(myId.length==0){
+            alert('아이디를 입력해주세요');
+            return; //메서드를 빠져나간다(아래 해석할 필요 없으니)
+        }
+        let myAge=f.m_age.value;
+        if(myAge==''){
+            alert('나이를 입력해주세요');
+            return;
+        }
+        let myPwd = f.m_pwd.value;
+        if(myPwd==''){
+            alert('비밀번호를 입력해주세요');
+            return;
+        } //검증 end
+        
+        //목적지
+        f.action="login.html";
+        //전송방식
+        f.method='get';
+        //입력된 데이터 전송
+        //f가 가진 name 속성이 action으로 지정된 페이지의 파라미터로 전달
+        f.submit();
+
+        } //function check end
+
+        let button=document.querySelector('input[type="button"]'); //input태근데 타입이 button인경우
+        button.addEventListener("click",function(e){
+            check();
+        })
+        
+        
+
+
+
+        
+        
+    </script>
+</body>
+</html>

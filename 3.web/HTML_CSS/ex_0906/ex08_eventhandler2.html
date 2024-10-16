@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <!--버튼 기능이 없다-->
+    <input type="button" value="버튼">
+    <script>
+        //어느 html 요소에 적용시킬건지 먼저 선택
+        let button = document.querySelector('input');
+        //button에 이벤트를 붙인다
+        //선택요소.addEventListener(이벤트 종류,기능동작);
+        //EventListener : 이벤트 감지기 이벤트가 발생하면 작동
+        button.addEventListener("click",function(e){
+            alert('clicked!')
+        });
+    </script>
+</body>
+</html>

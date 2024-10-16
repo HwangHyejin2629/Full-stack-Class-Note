@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #whole{
+            width:960px;
+            height: 700px;
+            border:3px solid black;
+            display: grid;
+            grid-template-rows: 1fr 7fr;
+        }
+        img{
+            height: 80px;
+            margin-top: 10px;
+        }
+        #logodiv{
+            border:1px solid black;
+        }
+        #searchbt{ border:1px solid black;}
+        #searchbt button{
+            color: #bfbfbf ;
+            margin-left: 20px;
+            margin-top:10px;
+        }
+        #underdiv{
+            display: grid;
+            grid-template-columns: 1fr 7fr;
+        }
+        #bookcover{
+            display: grid;
+            grid-template-rows: 1fr 1fr 9fr;
+        }
+        #searchinp{
+            float:right;
+            margin-right: 30px;
+        }
+        #searchinp input{
+            margin-top : 10px;
+            margin-left: 10px;
+            width:700px;
+        }
+        #arr span,select{
+            padding-right: 70px;
+           float:right;
+        
+        }
+        table{
+            border-collapse: collapse; 
+            float:right;
+            margin-right: 70px;
+        }
+        table,tr{
+            border:black solid 1px;
+        }
+        tr{height: 50px;}
+        tr>td:nth-child(1) { width:50px; padding-left: 20px;}
+	    tr>td:nth-child(2) { width:450px; }
+	    tr>td:nth-child(3) { width:100px; }
+	    tr>td:nth-child(4) { width:50px; }
+	    tr>td:nth-child(5) { width:50px; }
+        .red{}
+    </style>
+</head>
+<body>
+    <div id="whole">
+        <div id="logodiv"><img src="http://koreaisacademy.com/renewal2016/img/mainNew/it_logo_sp.png"></div>
+        <form id="underdiv" action="a.html">
+            <div id="searchbt">
+                <button>도서검색</button>
+            </div>
+            
+            <div id="bookcover">
+                <div id="searchinp"><input type="text" placeholder="도서명검색"><button>검색</button></div>
+                <div id="arr">
+                    <span>정렬방식</span>
+                    <select>
+                        <option selected>도서명 오름차순</option>
+                        <option>도서명 내림차순</option>
+                    </select>
+                </div>
+                <div id="booktable">
+                    <table>
+                        <tr>
+                            <td>1</td>
+                            <td>도서명</td>
+                            <td>대출중</td>
+                            <td><button class="red">보기</button></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>도서명</td>
+                            <td>대출가능</td>
+                            <td><button class="red">보기</button></td>
+                            <td><button class="blue">대출</button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>도서명</td>
+                            <td>대출가능</td>
+                            <td><button class="red">보기</button></td>
+                            <td><button class="blue">대출</button></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>도서명</td>
+                            <td>대출가능</td>
+                            <td><button class="red">보기</button></td>
+                            <td><button class="blue">대출</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>   
+            
+        </form>
+    </div>
+</body>
+</html>

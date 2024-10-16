@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //자바스크립트에서 제공하는 전역함수
+        // eval( ) 인자로 전달받은 문자열로 표현된 자바스크립트 코드를 실행해 주는 함수
+        let x = 10, y = 20
+        let result = eval('x+y');
+        document.write(result+'<br>')
+        // isFinte( ) 인자로 전달된 값이 유한한 수인지 검사
+        document.write(`${isFinite(123)}<br>`);
+        document.write(`${isFinite(123e100)}<br>`);
+        document.write(`${isFinite(0)}<br>`);
+        document.write(`${isFinite(true)}<br>`); //1
+        document.write(`${isFinite(false)}<br>`); //0
+        document.write(`${isFinite(null)}<br>`);
+        document.write(`${isFinite('')}<br>`);     
+        document.write(`${isFinite("문자열")}<br>`); //false
+        document.write(`${isFinite(undefined)}<br>`);
+        document.write(`${isFinite(NaN)}<br>`);
+        document.write('<hr>'); 
+
+        // isNaN() 인자로 전달 받은 값이 NaN인지 검사하여 결과 반환
+        document.write(`${isNaN(123)}<br>`);
+        document.write(`${isNaN(123e100)}<br>`);
+        document.write(`${isNaN(0)}<br>`);
+        document.write(`${isNaN(true)}<br>`); //1
+        document.write(`${isNaN(false)}<br>`); //0
+        document.write(`${isNaN(null)}<br>`);
+        document.write(`${isNaN('')}<br>`);     
+        document.write(`${isNaN("문자열")}<br>`); //false
+        document.write(`${isNaN(undefined)}<br>`);
+        document.write(`${isNaN(NaN)}<br>`);
+        document.write('<hr>'); 
+
+        //parseInt() 문자열을 파싱하여 정수로 반환, 
+        //parseFlot(); 문자열을 파싱하여 실수로 변환
+        document.write(`${parseFloat("123.000")} <br>`); 
+        document.write(`${parseFloat("123")} <br>`); 
+        document.write(`${parseFloat("123.123")} <br>`); 
+        document.write(`${parseFloat("12 34 56")} <br>`); //12 만 출력됨
+        document.write(`${parseFloat(" 123 ")} <br>`); 
+        document.write(`${parseFloat("초콜릿 123")} <br>`); //NaN
+        document.write('<hr>'); 
+        //parseInt() 문자열을 파싱하여 정수로 반환, 
+        document.write(`${parseInt("123.000")} <br>`); 
+        document.write(`${parseInt("123")} <br>`); 
+        document.write(`${parseInt("123.123")} <br>`); 
+        document.write(`${parseInt("12 34 56")} <br>`); //12 만 출력됨
+        document.write(`${parseInt(" 123 ")} <br>`); 
+        document.write(`${parseInt("초콜릿 123")} <br>`); //NaN
+        document.write(`${parseInt("10",8)} <br>`); //진수표현
+        //0x로 시작하면 16진수로 인식한다
+        document.write(`${parseInt("0x10")} <br>`); 
+        //encodeURI(),encodeComponent()
+        let uri = "http://google.com.search.php?name=홍길동&city=서울"
+        let enc1 = encodeURI(uri); //주소 빼고 이스케이프로 변경
+        let enc2 = encodeURIComponent(uri); //이스케이브로 변경
+        document.write(`${enc1}<br>${enc2}`)
+</script>
+</hseIntody>
+    
+</body>
+</html>

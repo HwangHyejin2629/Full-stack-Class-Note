@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wholediv{
+            width:80vw;
+            height: 400px;
+            border:1px solid black;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            place-items: center;
+        }
+        img{
+            height: 110px;
+            margin:auto;
+            
+        }
+        #login{
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+        }
+        .insert input{
+            height: 20px;
+        }
+        #loginbt button{
+            height: 52px;
+        }
+
+    </style>
+</head>
+<body>
+    <form action="ex.html">
+        <div id="wholediv">
+            <div id="logodiv"><img src="http://koreaisacademy.com/renewal2016/img/mainNew/it_logo_sp.png"></div>
+            <div id="loginwholediv">
+                <div id="login">
+                    <div>
+                        <div class="insert"><input type="text" name="id" placeholder="아이디"></div>
+                        <div class="insert"><input type="password" name="pw" placeholder="패스워드"></div>
+                    </div>
+                    <div id="loginbt"><button name="login">로그인</button></div>
+                </div>   
+                <div><input type="checkbox" name="check">아이디자동저장</div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

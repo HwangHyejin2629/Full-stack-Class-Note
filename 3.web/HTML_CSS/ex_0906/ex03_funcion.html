@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function square(x){
+            return x*x;
+        }
+        //함수와 메서드의 차이
+        //메서드는 항상 객체를 통해 호출한다, 함수는 독립적으로 호출이 가능하다.
+        let result =square(3);
+        document.write(`square()의 결과 : ${result}<br>`)
+        
+        document.write('<hr');
+        document.write(`<p> add : ${add(10,7)}`) //함수 호출 먼저 함
+        function add(x,y){  //선언을 나중에 해도 가능하다 (헷깔려버림)
+            return x+y;
+        }
+        
+</script>
+</head>
+<body>
+    
+</body>
+</html>

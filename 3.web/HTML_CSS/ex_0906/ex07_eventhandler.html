@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function numbering(n){
+            for(let i = 1;i<=n; i++){
+                console.log(i)
+            }
+        }
+        //자바스크립트 코드는 HTML요소를 대상으로 적용하는 경우가 많다.
+        //자바스크립트에 어떤 요소를 대상으로 할것인지 정해야한다.
+        // document.querySelector() 웹문서 html요소를 선택하는 메서드
+        // document.querySelectorAll() 웹문서있는 인자로 전달된 html 모든 요소 선택하여 배열로 반환
+        function red(){
+            let button = document.querySelectorAll("input"); //배열로 받아옴
+            for(i in button){
+                button[i].style.backgroundColor="red"; //css변경
+            }//배경색 이외에도 다양한 css 스타일을 JS로 이용해서 제어할 수 있다.    
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="click" onclick="alert('안녕하세요')"> <!-- click은 클릭했을떄  alert 은 경고창함수-->
+    <hr>
+    <p onclick="alert('안녕하세요')">눌러보세요</p>
+    <hr>
+    <input type="button" value="버튼" onclick="numbering(5)">
+    <hr>
+    <!--버튼을 클릭하면 버튼의 색을 빨간색으로 바꾸기-->
+    <input type="button" value="버튼" onclick="red()">
+</body>
+</html>
