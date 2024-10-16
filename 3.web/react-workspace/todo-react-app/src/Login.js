@@ -45,6 +45,7 @@ function Login(){
                     required
                     fullWidth
                     id="password"
+                    type="password"
                     label="패스워드"
                     name="password"
                     autoComplete="current-password" //브라우저가 자동완성할 때 사용할 값

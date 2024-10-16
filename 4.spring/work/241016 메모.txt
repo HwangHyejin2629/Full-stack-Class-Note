@@ -17,7 +17,6 @@ VPC : 집  / 서브넷 : 방
 
 일래스틱 빈스톡 Elastic Beanstalk : 환경구축
 
-Elastric Beanstalk로 서버 구축하기
-AWS 가입->콘솔홈->오른쪽 위, 지역 서울로 변경 
-IAM : root는 모든사용자에서 iam은 일반사용자로 
-역할->
+AWS
+엔드포인트 :  awseb-e-cmqpm4pmgc-stack-awsebrdsdatabase-oktmwcs3q8ze.cpmc8y8co1py.ap-northeast-2.rds.amazonaws.com
+아이디 : testpm  비밀번호 : 11111111

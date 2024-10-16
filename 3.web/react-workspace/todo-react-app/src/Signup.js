@@ -11,7 +11,7 @@ function Signup(){
     const handleSubmit=(event)=>{
         event.preventDefault();
         //오브젝트에서 form에 저장된 데이터를 맴의 형태로 바꿔줌
-        const data = new Form(event.target);
+        const data = new FormData(event.target);
         const username = data.get("username");
         const password = data.get("password");
         signup({username:username, password:password})
@@ -56,6 +56,7 @@ function Signup(){
                                     fullWidth //부모의 넓이를 퍼센트로 사용
                                     id="password"
                                     label="패스워드"
+                                    type="password"
                         />
                     </Grid>
                     {/*가입버튼*/}
